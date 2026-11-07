@@ -1,92 +1,85 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="880" viewBox="0 0 1240 880">
-<defs>
-<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#223"/></marker>
-</defs>
-<rect x="0" y="0" width="1240" height="880" fill="#ffffff"/>
-<style>text{font-family:Segoe UI,Arial,sans-serif;font-size:13px;fill:#1a1a1a}.b{fill:#eef4fb;stroke:#2c5d8f;stroke-width:2;rx:6}.m{fill:#fdf3e3;stroke:#a86b1f;stroke-width:2;rx:6}.c{fill:#eefaf0;stroke:#2f7d3a;stroke-width:2;rx:6}.lbl{font-size:12px;fill:#333}.sig{font-size:11px;fill:#555}.t{font-size:15px;font-weight:600}</style>
-<rect class="b" x="40" y="70" width="120" height="60"/>
-<text x="100.0" y="105.0" text-anchor="middle">PC</text>
-<rect class="b" x="210" y="70" width="150" height="60"/>
-<text x="285.0" y="97.0" text-anchor="middle">Sumador</text>
-<text x="285.0" y="113.0" text-anchor="middle">PC + 4</text>
-<rect class="m" x="430" y="40" width="200" height="120"/>
-<text x="530.0" y="89.0" text-anchor="middle">Memoria de</text>
-<text x="530.0" y="105.0" text-anchor="middle">instrucciones</text>
-<text x="530.0" y="121.0" text-anchor="middle">(ROM 4K x 32)</text>
-<rect class="c" x="720" y="40" width="210" height="120"/>
-<text x="825.0" y="97.0" text-anchor="middle">Unidad de control</text>
-<text x="825.0" y="113.0" text-anchor="middle">(ROM opcode,funct)</text>
-<rect class="c" x="980" y="40" width="210" height="90"/>
-<text x="1085.0" y="82.0" text-anchor="middle">Control de ALU</text>
-<text x="1085.0" y="98.0" text-anchor="middle">(ROM ALUOp,funct)</text>
-<rect class="b" x="220" y="300" width="190" height="150"/>
-<text x="315.0" y="364.0" text-anchor="middle">Banco de</text>
-<text x="315.0" y="380.0" text-anchor="middle">registros</text>
-<text x="315.0" y="396.0" text-anchor="middle">32 x 32 bits</text>
-<rect class="m" x="470" y="330" width="130" height="70"/>
-<text x="535.0" y="362.0" text-anchor="middle">Mux</text>
-<text x="535.0" y="378.0" text-anchor="middle">ALUSrc</text>
-<rect class="b" x="660" y="300" width="170" height="150"/>
-<text x="745.0" y="364.0" text-anchor="middle">ALU 32 bits</text>
-<text x="745.0" y="380.0" text-anchor="middle">AND OR NOR</text>
-<text x="745.0" y="396.0" text-anchor="middle">ADD SUB SLT</text>
-<rect class="m" x="900" y="300" width="200" height="150"/>
-<text x="1000.0" y="364.0" text-anchor="middle">Memoria de datos</text>
-<text x="1000.0" y="380.0" text-anchor="middle">(RAM 4K x 32)</text>
-<text x="1000.0" y="396.0" text-anchor="middle">lectura asincrona</text>
-<rect class="m" x="220" y="560" width="190" height="90"/>
-<text x="315.0" y="602.0" text-anchor="middle">Mux</text>
-<text x="315.0" y="618.0" text-anchor="middle">MemtoReg</text>
-<rect class="m" x="470" y="560" width="170" height="90"/>
-<text x="555.0" y="602.0" text-anchor="middle">Mux</text>
-<text x="555.0" y="618.0" text-anchor="middle">Reg. destino</text>
-<rect class="m" x="720" y="560" width="200" height="90"/>
-<text x="820.0" y="602.0" text-anchor="middle">Extensor de signo</text>
-<text x="820.0" y="618.0" text-anchor="middle">16 -> 32</text>
-<rect class="b" x="980" y="560" width="180" height="90"/>
-<text x="1070.0" y="594.0" text-anchor="middle">Desplazador</text>
-<text x="1070.0" y="610.0" text-anchor="middle">y sumadores</text>
-<text x="1070.0" y="626.0" text-anchor="middle">de salto</text>
-<polyline points="160,100 210,100" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
-<text class="sig" x="185.0" y="95.0" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:4">PC</text>
-<polyline points="360,100 430,100" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
-<text class="sig" x="395.0" y="95.0" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:4">PC[11:0]</text>
-<polyline points="530,160 530,220 330,220 330,300" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
-<text class="sig" x="430.0" y="225.0" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:4">instr</text>
-<polyline points="630,100 720,100" fill="none" stroke="#223" stroke-width="1.8"/>
-<text class="sig" x="675" y="93" text-anchor="middle">opcode / funct</text>
-<polyline points="825,160 825,185" fill="none" stroke="#223" stroke-width="1.8"/>
-<polyline points="825,185 1010,185 1010,130" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
-<text class="sig" x="918" y="178" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:4">ALUOp / funct</text>
-<polyline points="410,340 660,340" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
-<text class="sig" x="535.0" y="335.0" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:4">A = rs</text>
-<polyline points="410,400 470,400" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
-<text class="sig" x="440.0" y="395.0" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:4">B = rt</text>
-<polyline points="600,365 660,365" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
-<text class="sig" x="630.0" y="360.0" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:4">B'</text>
-<polyline points="760,560 760,440 535,440 535,400" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
-<text class="sig" x="650" y="433" text-anchor="middle">imm32</text>
-<polyline points="830,375 900,375" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
-<text class="sig" x="865.0" y="370.0" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:4">ALUOut</text>
-<polyline points="745,450 745,520 280,520 280,560" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
-<text class="sig" x="512.5" y="500.0" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:4">resultado</text>
-<polyline points="1000,450 1000,545 380,545 380,560" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
-<text class="sig" x="690.0" y="500.0" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:4">palabra / byte</text>
-<polyline points="350,560 350,450" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
-<text class="sig" x="350.0" y="500.0" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:4">dato de escritura</text>
-<polyline points="780,160 780,250 410,250 410,300" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
-<text class="sig" x="595.0" y="225.0" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:4">RegWrite / RegDst</text>
-<text class="sig" x="600" y="243" text-anchor="middle">señales de control</text>
-<polyline points="555,560 555,500 390,500 390,450" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
-<text class="sig" x="472.5" y="500.0" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:4">n_reg</text>
-<polyline points="1070,560 1070,20 100,20 100,70" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
-<text class="sig" x="585.0" y="310.0" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:4">proximo PC</text>
-<polyline points="830,160 830,200 1195,200 1195,605 1160,605" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
-<text class="sig" x="1030" y="193" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:4">Branch / Jump / Jr</text>
-<text class="t" x="40" y="700">Procesador monociclo MIPS32 — Equipo 7</text>
-<rect class="b" x="40" y="720" width="16" height="16"/><text class="lbl" x="64" y="733">Ruta de datos</text>
-<rect class="m" x="200" y="720" width="16" height="16"/><text class="lbl" x="224" y="733">Multiplexores / memorias / extension</text>
-<rect class="c" x="520" y="720" width="16" height="16"/><text class="lbl" x="544" y="733">Unidades de control combinacionales</text>
-<text class="sig" x="40" y="770">Instrucciones soportadas: lw, sw, add, sub, and, or, nor, slt, beq, j, jal, jr, lb, addi</text>
-<text class="sig" x="40" y="790">$zero cableado a 0 e inmutable · lectura del banco asincrona · escritura en flanco de subida</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="930" viewBox="0 0 1500 930">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#223"/></marker></defs>
+<rect width="1500" height="930" fill="#fff"/>
+<style>text{font-family:Segoe UI,Arial,sans-serif;font-size:13px;fill:#1a1a1a}.b{fill:#eef4fb;stroke:#2c5d8f;stroke-width:2}.m{fill:#fdf3e3;stroke:#a86b1f;stroke-width:2}.c{fill:#eefaf0;stroke:#2f7d3a;stroke-width:2}.sig{font-size:11px;fill:#444}</style>
+<rect class="b" x="40" y="80" width="120" height="60" rx="6"/>
+<text x="100.0" y="115" text-anchor="middle">PC</text>
+<rect class="b" x="230" y="80" width="150" height="60" rx="6"/>
+<text x="305.0" y="108" text-anchor="middle">Sumador</text>
+<text x="305.0" y="122" text-anchor="middle">PC + 4</text>
+<rect class="m" x="470" y="40" width="190" height="110" rx="6"/>
+<text x="565.0" y="92" text-anchor="middle">Memoria de</text>
+<text x="565.0" y="108" text-anchor="middle">instrucciones</text>
+<rect class="c" x="740" y="40" width="200" height="110" rx="6"/>
+<text x="840.0" y="92" text-anchor="middle">Unidad de</text>
+<text x="840.0" y="108" text-anchor="middle">control</text>
+<rect class="c" x="1010" y="40" width="190" height="90" rx="6"/>
+<text x="1105.0" y="90" text-anchor="middle">Control ALU</text>
+<rect class="b" x="470" y="250" width="190" height="150" rx="6"/>
+<text x="565.0" y="315" text-anchor="middle">Banco de</text>
+<text x="565.0" y="330" text-anchor="middle">registros</text>
+<text x="565.0" y="345" text-anchor="middle">32 x 32</text>
+<rect class="m" x="720" y="390" width="110" height="60" rx="6"/>
+<text x="775.0" y="418" text-anchor="middle">Mux</text>
+<text x="775.0" y="432" text-anchor="middle">ALUSrc</text>
+<rect class="b" x="900" y="250" width="170" height="150" rx="6"/>
+<text x="985.0" y="330" text-anchor="middle">ALU 32 bits</text>
+<rect class="m" x="1150" y="250" width="170" height="150" rx="6"/>
+<text x="1235.0" y="322" text-anchor="middle">Memoria de</text>
+<text x="1235.0" y="338" text-anchor="middle">datos</text>
+<rect class="m" x="470" y="470" width="150" height="60" rx="6"/>
+<text x="545.0" y="498" text-anchor="middle">Extensor</text>
+<text x="545.0" y="512" text-anchor="middle">de signo</text>
+<rect class="m" x="1150" y="470" width="170" height="60" rx="6"/>
+<text x="1235.0" y="498" text-anchor="middle">Mux</text>
+<text x="1235.0" y="512" text-anchor="middle">MemtoReg</text>
+<rect class="m" x="240" y="470" width="150" height="60" rx="6"/>
+<text x="315.0" y="498" text-anchor="middle">Mux</text>
+<text x="315.0" y="512" text-anchor="middle">Reg. destino</text>
+<rect class="b" x="150" y="660" width="190" height="80" rx="6"/>
+<text x="245.0" y="698" text-anchor="middle">Mux</text>
+<text x="245.0" y="712" text-anchor="middle">proximo PC</text>
+<polyline points="160,110 230,110" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="195" y="104" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:5">PC</text>
+<polyline points="100,80 100,70 470,70" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="300" y="62" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:5">PC[11:0]</text>
+<polyline points="380,110 410,110 410,700 340,700" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="425" y="300" text-anchor="start" style="paint-order:stroke;stroke:#fff;stroke-width:5">PC+4</text>
+<polyline points="660,100 740,100" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="700" y="92" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:5">opcode / funct</text>
+<polyline points="565,150 565,250" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="575" y="205" text-anchor="start" style="paint-order:stroke;stroke:#fff;stroke-width:5">instr</text>
+<polyline points="840,150 840,210 430,210 430,290 470,290" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="852" y="196" text-anchor="start" style="paint-order:stroke;stroke:#fff;stroke-width:5">RegWrite / RegDst</text>
+<polyline points="660,300 900,300" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="780" y="292" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:5">A = rs</text>
+<polyline points="660,350 690,350 690,400 720,400" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="700" y="372" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:5">B = rt</text>
+<polyline points="620,500 660,500 660,430 720,430" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="640" y="470" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:5">imm32</text>
+<polyline points="830,420 860,420 860,360 900,360" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="872" y="396" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:5">B'</text>
+<polyline points="1070,315 1150,315" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="1110" y="309" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:5">ALUOut</text>
+<polyline points="1070,340 1100,340 1100,490 1150,490" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="1112" y="420" text-anchor="start" style="paint-order:stroke;stroke:#fff;stroke-width:5">resultado</text>
+<polyline points="1235,400 1235,470" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="1245" y="440" text-anchor="start" style="paint-order:stroke;stroke:#fff;stroke-width:5">palabra / byte</text>
+<polyline points="1320,500 1390,500 1390,610 400,610 400,380 470,380" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="830" y="602" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:5">dato de escritura</text>
+<polyline points="315,470 315,430 430,430 430,250" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="350" y="422" text-anchor="start" style="paint-order:stroke;stroke:#fff;stroke-width:5">n. registro</text>
+<polyline points="890,150 890,175 1105,175 1105,130" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="1000" y="168" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:5">ALUOp / funct</text>
+<polyline points="1105,130 1105,205 985,205 985,250" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="1060" y="198" text-anchor="start" style="paint-order:stroke;stroke:#fff;stroke-width:5">op</text>
+<polyline points="340,740 340,780 30,780 30,110 40,110" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="180" y="772" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:5">proximo PC</text>
+<polyline points="740,60 700,60 700,640 200,640 200,660" fill="none" stroke="#223" stroke-width="1.8" marker-end="url(#a)"/>
+<text class="sig" x="450" y="612" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:5">Branch / Jump / Jr</text>
+<text x="40" y="860" style="font-size:15px;font-weight:600">Procesador monociclo MIPS32 - Equipo 7</text>
+<rect class="b" x="40" y="875" width="16" height="16"/><text class="sig" x="64" y="888">Ruta de datos</text>
+<rect class="m" x="190" y="875" width="16" height="16"/><text class="sig" x="214" y="888">Multiplexores / memorias / extension</text>
+<rect class="c" x="510" y="875" width="16" height="16"/><text class="sig" x="534" y="888">Unidades de control</text>
+<text class="sig" x="40" y="915">lw, sw, add, sub, and, or, nor, slt, beq, j, jal, jr, lb, addi</text>
 </svg>

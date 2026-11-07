@@ -1,0 +1,38 @@
+==============================================================================
+  MEMORIA DE DATOS  -  Laboratorio 03  -  Equipo 7
+==============================================================================
+
+  La memoria de datos de Logisim es volatil: al iniciar la simulacion
+  todas sus palabras valen 0x00000000.  El programa NO necesita datos
+  precargados: el mismo codigo escribe la configuracion inicial
+  (N = 10) en la direccion 0x00000200 antes de usarla.
+
+  Contenido inicial (antes de ejecutar):
+     0x00000000 - 0x00000FFF : 0x00000000  (4096 palabras en cero)
+
+  Mapa de memoria que utiliza el programa:
+
+     Direccion   Contenido                        Quien lo escribe
+     ---------   ------------------------------   ----------------------
+     0x00000200  0x0000020A  (byte0 = 10 -> N)    main (instruccion SW)
+     0x00000100  0x00000000  S(0)                 serie
+     0x00000104  0x00000001  S(1)                 serie
+     0x00000108  0x00000002  S(2)                 serie
+     0x0000010C  0x00000005  S(3)                 serie
+     0x00000110  0x0000000C  S(4)                 serie
+     0x00000114  0x0000001D  S(5)                 serie
+     0x00000118  0x00000046  S(6)                 serie
+     0x0000011C  0x000000A9  S(7)                 serie
+     0x00000120  0x00000198  S(8)                 serie
+     0x00000124  0x000003D9  S(9)                 serie
+     0x00000300  0x000003D9  S(9)                 main
+     0x00000304  0xFFFFFF91  checksum de bytes    main
+     0x00000308  0x0000000A  cantidad de terminos main
+
+  Resultados esperados (despues de ejecutar, ~246 ciclos):
+     S(0..9) = 0, 1, 2, 5, 12, 29, 70, 169, 408, 985
+     $v0 = -111 (0xFFFFFF91)  suma con signo de los bytes bajos (LB)
+     $v1 = 10                 cantidad de terminos procesados
+
+  Para cargar datos a mano en la GUI de Logisim: clic derecho sobre
+  la RAM -> 'Edit contents'.
