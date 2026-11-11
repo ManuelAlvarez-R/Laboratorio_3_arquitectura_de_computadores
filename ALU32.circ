@@ -2729,4 +2729,125 @@
     <wire from="(910,550)" to="(920,550)"/>
     <wire from="(920,410)" to="(920,550)"/>
   </circuit>
+  <circuit name="fetch">
+    <a name="circuit" val="fetch"/>
+    <a name="simulationFrequency" val="10.0"/>
+    <wire from="(80,320)" to="(270,320)"/>
+    <wire from="(80,400)" to="(280,400)"/>
+    <wire from="(280,400)" to="(280,340)"/>
+    <wire from="(80,460)" to="(290,460)"/>
+    <wire from="(290,460)" to="(290,340)"/>
+    <wire from="(250,360)" to="(250,330)"/>
+    <wire from="(250,330)" to="(270,330)"/>
+    <wire from="(300,320)" to="(340,320)"/>
+    <wire from="(340,320)" to="(340,150)"/>
+    <wire from="(340,150)" to="(480,150)"/>
+    <wire from="(340,320)" to="(460,320)"/>
+    <wire from="(380,220)" to="(440,220)"/>
+    <wire from="(440,220)" to="(440,170)"/>
+    <wire from="(440,170)" to="(480,170)"/>
+    <wire from="(460,100)" to="(500,100)"/>
+    <wire from="(500,100)" to="(500,140)"/>
+    <wire from="(520,160)" to="(680,160)"/>
+    <wire from="(480,320)" to="(560,320)"/>
+    <wire from="(560,320)" to="(560,250)"/>
+    <wire from="(560,250)" to="(620,250)"/>
+    <wire from="(860,300)" to="(980,300)"/>
+    <comp lib="0" loc="(80,320)" name="Pin">
+      <a name="facing" val="east"/>
+      <a name="label" val="nextPC"/>
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(80,400)" name="Pin">
+      <a name="facing" val="east"/>
+      <a name="label" val="CLK"/>
+      <a name="width" val="1"/>
+    </comp>
+    <comp lib="0" loc="(80,460)" name="Pin">
+      <a name="facing" val="east"/>
+      <a name="label" val="reset"/>
+      <a name="width" val="1"/>
+    </comp>
+    <comp lib="4" loc="(300,320)" name="Register">
+      <a name="width" val="32"/>
+      <a name="trigger" val="rising"/>
+      <a name="appearance" val="classic"/>
+      <a name="label" val="PC"/>
+    </comp>
+    <comp lib="0" loc="(250,360)" name="Constant">
+      <a name="facing" val="east"/>
+      <a name="width" val="1"/>
+      <a name="value" val="0x1"/>
+    </comp>
+    <comp lib="0" loc="(380,220)" name="Constant">
+      <a name="facing" val="east"/>
+      <a name="width" val="32"/>
+      <a name="value" val="0x4"/>
+    </comp>
+    <comp lib="0" loc="(460,100)" name="Constant">
+      <a name="facing" val="east"/>
+      <a name="width" val="1"/>
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="3" loc="(520,160)" name="Adder">
+      <a name="width" val="32"/>
+      <a name="label" val="Sumador PC4"/>
+    </comp>
+    <comp lib="0" loc="(460,320)" name="Splitter">
+      <a name="fanout" val="1"/>
+      <a name="incoming" val="32"/>
+      <a name="appear" val="center"/>
+      <a name="spacing" val="1"/>
+      <a name="bit0" val="none"/>
+      <a name="bit1" val="none"/>
+      <a name="bit2" val="0"/>
+      <a name="bit3" val="0"/>
+      <a name="bit4" val="0"/>
+      <a name="bit5" val="0"/>
+      <a name="bit6" val="0"/>
+      <a name="bit7" val="0"/>
+      <a name="bit8" val="0"/>
+      <a name="bit9" val="0"/>
+      <a name="bit10" val="none"/>
+      <a name="bit11" val="none"/>
+      <a name="bit12" val="none"/>
+      <a name="bit13" val="none"/>
+      <a name="bit14" val="none"/>
+      <a name="bit15" val="none"/>
+      <a name="bit16" val="none"/>
+      <a name="bit17" val="none"/>
+      <a name="bit18" val="none"/>
+      <a name="bit19" val="none"/>
+      <a name="bit20" val="none"/>
+      <a name="bit21" val="none"/>
+      <a name="bit22" val="none"/>
+      <a name="bit23" val="none"/>
+      <a name="bit24" val="none"/>
+      <a name="bit25" val="none"/>
+      <a name="bit26" val="none"/>
+      <a name="bit27" val="none"/>
+      <a name="bit28" val="none"/>
+      <a name="bit29" val="none"/>
+      <a name="bit30" val="none"/>
+      <a name="bit31" val="none"/>
+    </comp>
+    <comp lib="4" loc="(620,240)" name="ROM">
+      <a name="addrWidth" val="8"/>
+      <a name="dataWidth" val="32"/>
+      <a name="contents" val="addr/data: 8 32&#10;20080200 2009020a ad090000 81040000 20050100 c000012 20060300 acc20000&#10;20050100 c000036 acc20004 acc30008 8cd30000 8cd40004 8cd50008 20080120&#10;8d160004 8000011 23bdfff4 afbf0008 afb10004 afb20000 20110000 20120001&#10;20080000 a05820 104482a 11200014 1100000a 200a0001 110a000c 2525020&#10;1515020 2408820 1409020 ad6a0000 216b0004 21080001 800001a ad600000&#10;216b0004 21080001 800001a 200a0001 ad6a0000 216b0004 21080001 800001a&#10;2401020 8fbf0008 8fb10004 8fb20000 23bd000c 3e00008 23bdfffc afbf0000&#10;20020000 20030000 20080000 a05820 104482a 11200006 816a0000 4a1020&#10;20630001 216b0004 21080001 800003c 8fbf0000 23bd0004 3e00008 185*0"/>
+      <a name="label" val="ROM 256 x 32"/>
+    </comp>
+    <comp lib="0" loc="(680,160)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="label" val="PCplus4"/>
+      <a name="width" val="32"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(980,300)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="label" val="Instruction"/>
+      <a name="width" val="32"/>
+      <a name="output" val="true"/>
+    </comp>
+  </circuit>
 </project>
