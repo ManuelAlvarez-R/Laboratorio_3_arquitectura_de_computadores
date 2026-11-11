@@ -27,22 +27,26 @@ registros MIPS.
 
 ### 2.1 Ruta de datos
 
-El diseño es **jerárquico**: el proyecto se organiza en nueve circuitos de
-Logisim: `main` y ocho subcircuitos que se instancian entre sí.
+El diseño es **jerárquico**: el proyecto se organiza en doce circuitos de
+Logisim: `main` y once subcircuitos que se instancian entre sí. `main` no
+contiene ninguna primitiva de lógica: sólo bloques, el reloj y el pin `RST`.
 
-- **`main`** — circuito superior; sólo interconecta bloques, con cables ortogonales. Contiene las dos unidades de control, los multiplexores, los extensores de signo, la lógica de salto, la memoria de datos y la instanciación de los ocho subcircuitos.
+- **`main`** — circuito superior; sólo interconecta bloques con cables ortogonales, sin túneles. Instancia los once subcircuitos; no tiene compuertas, multiplexores, divisores, extensores ni constantes.
 - **`fetch`** — la etapa de búsqueda: registro PC, sumador `PC+4` y memoria de instrucciones (ROM de 4 K palabras × 32 bits direccionada por byte, `PC[11:0]`). Sus puertos son `nextPC`, `CLK` y `reset` de entrada, y `PC`, `PCplus4` e `Instruction` de salida.
 - **`isplit`** — la separación de campos: `Instruction` → `opcode`, `rs`, `rt`, `rd`, `shamt`, `funct`, `imm` (16) y `target` (26).
-- **`alu32`** — la ALU de 32 bits: AND, OR, NOR, sumador, restador, comparador con signo para `slt`, multiplexor 8:1 de resultado y detector de cero.
+- **`alu32`** — la ALU de 32 bits del Laboratorio 1: AND, OR, NOR, sumador, restador, comparador con signo para `slt`, multiplexor 8:1 de resultado y detector de cero.
+- **`alu`** — el bloque de ejecución: instancia `alu32` y añade el multiplexor `ALUSrc` y la extensión de signo del inmediato. Puertos `A`, `B`, `imm`, `ALUSrc`, `ALUOperation` → `Result`, `Zero`.
 - **`banco_registros`** — los 32 registros de 32 bits, el decodificador de escritura y los dos multiplexores 32:1 de lectura, con `$zero` inmutable.
-- **`unidad_control`** — la ROM de control y el divisor de las 13 señales.
+- **`unidad_control`** — la ROM de control y el divisor de señales; entrega cinco señales sueltas (`RegWrite`, `MemRead`, `MemWrite`, `Branch`, `ALUSrc`) y cuatro buses de selección (`wr_sel`, `mtr_sel`, `pc_sel`, `ALUOp`).
 - **`control_alu`** — la ROM de control de la ALU (`ALUOp`, `funct` → `op`).
 - **`mem_datos`** — la RAM, el índice de palabra, el selector de byte y la extensión de signo de `LB`.
-- **`proximo_pc`** — los desplazadores `<<2`, los sumadores, la compuerta de `Branch & Zero` y los multiplexores del próximo PC.
+- **`proximo_pc`** — el desplazador `<<2`, el sumador de `beq`, la extensión del inmediato, la compuerta de `Branch & Zero` y los multiplexores del próximo PC.
+- **`write_reg`** — la selección del registro destino: `rt`, `rd` o `$31` para `jal` (`rt`, `rd`, `wr_sel` → `wr`).
+- **`writeback`** — la selección del dato de escritura: resultado de la ALU, palabra, byte con signo o `PC+4` (`alu_res`, `mem_rdata`, `lb_val`, `pc4`, `sel` → `wr_data`).
 
 Cada subcircuito expone únicamente sus pines, con la nomenclatura del curso
-(`A`, `B`, `ALUOperation` → `Result`, `Zero` en la ALU; `ReadReg1`,
-`ReadReg2`, `WriteReg`, `WriteData`, `RegWrite`, `CLK`, `Reset` →
+(`A`, `B`, `imm`, `ALUSrc`, `ALUOperation` → `Result`, `Zero` en la ALU;
+`ReadReg1`, `ReadReg2`, `WriteReg`, `WriteData`, `RegWrite`, `CLK`, `Reset` →
 `ReadData1`, `ReadData2` en el banco; `Address`, `WriteData`, `MemWrite`,
 `MemRead`, `CLK` → `ReadData`, `ReadDataByte` en la memoria de datos;
 `nextPC`, `CLK`, `reset` → `PC`, `PCplus4`, `Instruction` en `fetch`), de modo
@@ -53,19 +57,23 @@ funcionales son:
 |---|---|
 | Etapa de búsqueda (`fetch`) | Registro PC de 32 bits con *enable* permanente y *clear* asíncrono + sumador `PC+4` + ROM de 4 K palabras × 32 bits direccionada por byte (`PC[11:0]`) |
 | Separación de campos (`isplit`) | Tres divisores de bits: `{opcode, rs, rt, rd, shamt, funct}`, `imm[15:0]` y `target[25:0]` |
+| ALU 32 (`alu32`) | La ALU del Laboratorio 1, sin cambios |
+| Bloque ALU (`alu`) | `alu32` + multiplexor `ALUSrc` + *Bit Extender* 16→32 en modo `sign` |
 | Banco de registros | 32 registros de 32 bits + decodificador 5→32 + dos multiplexores 32:1 |
-| Extensión de signo | *Bit Extender* 16→32 en modo `sign` |
-| ALU | AND, OR, NOR (compuertas de 32 bits), sumador, restador, comparador con signo y multiplexor 8:1 |
+| Unidad de control | ROM 4 K × 16 + divisor de 13 bits agrupado en cinco señales y cuatro buses |
+| Registro destino (`write_reg`) | Multiplexor 4:1 (`rt`, `rd`, `31`, `31`) controlado por `wr_sel` |
+| Escritura (`writeback`) | Multiplexor 4:1 (ALU / palabra / byte con signo / `PC+4`) controlado por `mtr_sel` |
 | Memoria de datos | RAM de 4 K palabras × 32 bits, lectura asíncrona, escritura en flanco de subida |
-| Memoria → registro | Multiplexor 4:1 (ALU / palabra / byte con signo / `PC+4`) |
-| Cálculo de saltos | Desplazadores `<<2`, sumador para `beq`, AND/OR para el salto incondicional |
+| Cálculo de saltos | Desplazador `<<2`, sumador para `beq`, extensión de signo del inmediato, AND/OR para el salto incondicional |
 
 ![Diagrama de bloques del procesador](diagrama_procesador.svg)
 
 *Figura 1. Diagrama de bloques de la ruta de datos y de las unidades de control.
 El recuadro punteado agrupa la etapa de búsqueda, que en el esquemático es el
 subcircuito `fetch`; los campos de la instrucción los separa `isplit`, entre la
-memoria de instrucciones y el banco/control. El esquemático completo está en
+memoria de instrucciones y el banco/control. El multiplexor de registro destino
+está dentro de `write_reg`, el de escritura dentro de `writeback` y el extensor
+de signo dentro de `alu`. El esquemático completo está en
 `procesador_monociclo.circ`.*
 
 El PC, el sumador `PC+4` y la memoria de instrucciones se encapsularon en el
@@ -81,6 +89,15 @@ palabra de 32 bits y entrega cada campo por un pin con nombre (`opcode`, `rs`,
 `rt`, `rd`, `shamt`, `funct`, `imm` y `target`), en lugar de repartir divisores
 de bits dentro de `main`. Todos los bloques usan la apariencia del curso: caja
 negra, barra de título inferior y etiquetas de puerto dentro del bloque.
+
+En el mismo sentido se encapsularon las etapas que antes quedaban como
+primitivas sueltas en `main`: el bloque `alu` envuelve la ALU del Laboratorio 1
+con su multiplexor `ALUSrc` y la extensión de signo; `write_reg` resuelve el
+registro destino (`rt`, `rd` o `$31`); `writeback` resuelve el dato que vuelve
+al banco; y `unidad_control` entrega directamente los buses de selección
+(`wr_sel`, `mtr_sel`, `pc_sel`, `ALUOp`), de modo que `main` no necesita
+divisores. El resultado es un `main` con **sólo bloques, reloj y reset**, sin
+primitivas ni túneles.
 
 El reloj es un componente `Clock` (10 Hz de simulación) y el reset se controla
 con el pin `RST`. Todo el banco de registros y el PC se cargan en el **flanco de
@@ -118,6 +135,13 @@ combinaciones y la función resulta puramente combinacional. Las señales son:
 | 9 | `Jal` | escribe `$31` con `PC+4` |
 | 10 | `Jr` | salto al registro `rs` |
 | 11–12 | `ALUOp` | 00 ADD · 01 SUB · 10 según `funct` |
+
+Internamente la ROM entrega los 13 bits; el divisor del bloque los agrupa en
+sus puertos: cinco señales sueltas (`RegWrite`, `MemRead`, `MemWrite`,
+`Branch`, `ALUSrc`) y cuatro buses de selección, `wr_sel = {Jal, RegDst}`,
+`mtr_sel = {MemtoReg1, MemtoReg0}`, `pc_sel = {Jr, Jump}` y
+`ALUOp = {ALUOp1, ALUOp0}`. Así el nivel superior no necesita recomponer los
+buses con divisores.
 
 Tabla de control resultante:
 
@@ -335,6 +359,10 @@ Ver `memoria_datos_inicial.txt`.
 | `unidad_control` | 4096 | las 64 opciones de `opcode` × 64 de `funct` | **4096 / 4096** |
 | `control_alu` | 256 | los 4 valores de `ALUOp` × 64 de `funct` | **256 / 256** |
 | `alu32` | 56 | 8 operaciones × 7 pares de operandos (incluye signo y cero) | **56 / 56** |
+| `alu` | 48 | 6 operaciones × 4 pares × `ALUSrc = 0/1` (incluye inmediato negativo) | **48 / 48** |
+| `write_reg` | 12 | 4 selecciones × 3 pares `rt`/`rd` | **12 / 12** |
+| `writeback` | 4 | las 4 fuentes de escritura | **4 / 4** |
+| `proximo_pc` | 6 | secuencial, `beq` tomado/no tomado, offset negativo, `j` y `jr` | **6 / 6** |
 | `fetch` | 13 | reset + 6 instrucciones consecutivas (PC, `PC+4`, `Instruction`) | **13 / 13** |
 | `banco_registros` | 11 | reset, escritura/lectura de dos registros y `$zero` inmutable | **11 / 11** |
 | `mem_datos` | 9 | escritura/lectura de palabra y de byte con signo | **9 / 9** |
@@ -392,8 +420,9 @@ extensión de signo de `LB`.
 - **Memoria direccionada por byte.** Es necesaria para que `lb`/`lw`/`sw` compartan el mismo espacio de direcciones y para que `lb` pueda acceder a cualquier byte. Se toma `ALU[13:2]` como índice de palabra y `ALU[1:0]` como selector de byte; esto también evita tener que implementar un *splitter* de direcciones.
 - **RAM con lectura asíncrona.** En un procesador monociclo el dato de `lw`/`lb` debe estar disponible en el mismo ciclo; por eso se activa `asyncread`, manteniendo la escritura en el flanco de subida.
 - **Etapa de búsqueda encapsulada.** El registro PC, el sumador `PC+4` y la ROM de instrucciones se agruparon en el subcircuito `fetch`, y los campos de la instrucción en `isplit`, que expone cada campo por un pin con nombre. Así `main` se lee como un diagrama de bloques y cada etapa se puede examinar y verificar por separado, sin cambiar el ISA ni el direccionamiento por byte.
+- **`main` sin primitivas.** La ALU con su multiplexor y su extensión (`alu`), la selección del registro destino (`write_reg`), la del dato de escritura (`writeback`) y los buses de control se movieron a subcircuitos, de modo que el nivel superior sólo contiene bloques, reloj y reset.
 - **Verificación por bloque.** Cada subcircuito tiene su propio archivo de vectores (combinacionales de forma exhaustiva, secuenciales con una secuencia de reloj explícita), de modo que un fallo se localiza en el bloque que lo produce y no sólo al final del programa.
-- **Cableado ortogonal con túneles auxiliares.** La ruta de datos se dibujó con cables horizontales y verticales, usando carriles exclusivos por red para que no haya uniones accidentales; las 32 salidas del banco llegan a los dos multiplexores 32:1 mediante un abanico de carriles paralelos. Los túneles se usan en los pines de observación y en las redes que el ruteo no puede llevar sin cruces.
+- **Cableado ortogonal sin túneles en `main`.** La ruta de datos se dibujó con cables horizontales y verticales por canales entre bloques, con cruces perpendiculares y sin uniones accidentales; las 32 salidas del banco llegan a los dos multiplexores 32:1 mediante un abanico de carriles paralelos. Los únicos túneles del proyecto quedan en los pines de observación de la versión de verificación.
 - **`$zero` cableado a cero.** Garantiza la semántica MIPS aun si el programa intenta escribir en él.
 - **Reset explícito.** Los registros de Logisim arrancan en estado desconocido; el pin `RST` limpia el PC y el banco de registros al inicio.
 
@@ -402,9 +431,10 @@ extensión de signo de `LB`.
 ## 6. Conclusiones
 
 - Se implementó y verificó un procesador monociclo MIPS32 que ejecuta las diez instrucciones básicas más `jal`, `jr`, `lb` y `addi`.
-- El diseño quedó organizado en nueve circuitos jerárquicos; la etapa de búsqueda se encapsuló en `fetch` (PC, `PC+4` y memoria de instrucciones) y los campos de la instrucción en `isplit`.
+- El diseño quedó organizado en doce circuitos jerárquicos: `main` sólo instancia bloques (sin primitivas de lógica ni túneles), la etapa de búsqueda se encapsuló en `fetch`, los campos en `isplit`, y las etapas de ejecución y escritura en `alu`, `write_reg` y `writeback`.
+- La unidad de control entrega los buses de selección (`wr_sel`, `mtr_sel`, `pc_sel`, `ALUOp`) directamente, sin divisores en el nivel superior.
 - Los bloques usan la apariencia del curso (caja negra con barra de título inferior) y la nomenclatura MIPS de puertos (`ReadReg1`, `WriteData`, `ALUOperation`, `ReadData`, etc.).
 - El banco de registros es jerárquico (32 registros de 32 bits), con lectura asíncrona, escritura síncrona y `$zero` inmutable.
 - El programa solución usa procedimientos (`jal`/`jr`), respeta la convención de registros y publica sus resultados tanto en el banco de registros como en la memoria de datos.
-- La verificación se hizo en dos niveles: cada bloque por separado (4512 vectores en total, sin fallos) y el programa completo contra un simulador de referencia, registro por registro (610 vectores, cero discrepancias).
+- La verificación se hizo en dos niveles: cada bloque por separado (4582 vectores en total, sin fallos) y el programa completo contra un simulador de referencia, registro por registro (610 vectores, cero discrepancias).
 - La instrucción `LB` resultó especialmente útil para mostrar la diferencia entre una carga de palabra y una carga de byte con extensión de signo.
