@@ -79,6 +79,12 @@
 
   Total: 71 instrucciones, 284 bytes.
 
+  La ROM de instrucciones del diseno es de 256 palabras x 32 bits y se
+  direcciona por palabra con PC[9:2].  Por eso la instruccion de la
+  direccion 0x00000000 se carga en la palabra 0 de la ROM, la de
+  0x00000004 en la palabra 1, y asi sucesivamente.  Las 185 palabras
+  restantes quedan en cero.
+
   Etiquetas:
      main         = 0x00000000  (instruccion 0)
      fin          = 0x00000044  (instruccion 17)
@@ -93,3 +99,33 @@
 
   Nota: el programa se carga en la memoria de instrucciones a partir
         de la direccion 0x00000000.
+
+==============================================================================
+  VERIFICACION EN SIMULACION
+==============================================================================
+
+  Simulacion del circuito Main de ALU32.circ:
+     - 350 ciclos de reloj despues del reset.
+     - La reconstruccion final de memoria y registros coincide con los
+       valores esperados del programa.
+     - El PC llega a 0x00000044 (etiqueta fin) y permanece alli 106 ciclos.
+
+  Memoria de datos al finalizar:
+     0x100..0x124 = 0x00000000, 0x00000001, 0x00000002, 0x00000005,
+                    0x0000000C, 0x0000001D, 0x00000046, 0x000000A9,
+                    0x00000198, 0x000003D9
+     0x200 = 0x0000020A
+     0x300 = 0x000003D9
+     0x304 = 0xFFFFFF91
+     0x308 = 0x0000000A
+
+  Banco de registros al finalizar:
+     $v0 = 0xFFFFFF91   $v1 = 0x0000000A
+     $s3 = 0x000003D9   $s4 = 0xFFFFFF91
+     $s5 = 0x0000000A   $s6 = 0x000003D9
+     $ra = 0x00000028   $t3 = 0x00000128
+
+  El programa ejercita lw, sw, add, slt, beq, j, jal, jr, lb y addi,
+  incluyendo la extension de signo de lb y del inmediato.  Las
+  operaciones sub, and, or y nor se verificaron por separado en el
+  bloque ALU32bits.
