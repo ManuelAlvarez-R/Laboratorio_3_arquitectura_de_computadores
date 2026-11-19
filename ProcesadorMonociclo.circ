@@ -5938,12 +5938,10 @@
     <comp lib="4" loc="(730,330)" name="ROM">
       <a name="appearance" val="logisim_evolution"/>
       <a name="contents">addr/data: 8 32
-23bdffd8 3a02820 2004000a c000006 409820 8000005 23bdfff4 afbf0008
-afb10004 afb20000 20110000 20120001 20080000 a05820 104482a 11200014
-1100000a 200a0001 110a000c 2525020 1515020 2408820 1409020 ad6a0000
-216b0004 21080001 800000e ad600000 216b0004 21080001 800000e 200a0001
-ad6a0000 216b0004 21080001 800000e 2401020 8fbf0008 8fb10004 8fb20000
-23bd000c 3e00008
+20100006 20080004 2088820 2309022 200800ff 20090f0f 1099824 109a025
+109a827 211b02a 230b82a 23bdfff8 afb00000 8faa0000 20080085 afa80004
+83ab0004 11500002 200c0063 8100015 200c0001 12110002 200d0001 8100019
+200d0063 c10001c 200f0001 810001e 200e0007 3e00008 810001e
 </a>
       <a name="dataWidth" val="32"/>
       <a name="label" val="ROM_Instrucciones"/>
@@ -5976,7 +5974,7 @@ ad6a0000 216b0004 21080001 800000e 2401020 8fbf0008 8fb10004 8fb20000
     <a name="appearance" val="logisim_evolution"/>
     <a name="circuit" val="Main"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
-    <a name="simulationFrequency" val="10.0"/>
+    <a name="simulationFrequency" val="1.0"/>
     <comp lib="0" loc="(100,50)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="label" val="clk"/>
